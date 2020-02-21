@@ -7,4 +7,9 @@ def get_answer(accepted_answers=['y', 'n']):
             prompt = '/'.join(accepted_answers) + ': '
         answer = input(prompt)
         if answer in accepted_answers:
+            print()
             return answer
+
+def print_header(str):
+    print('\n_______________________________')
+    print(f'{str}\n')

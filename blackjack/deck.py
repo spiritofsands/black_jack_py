@@ -16,7 +16,7 @@ class Deck:
         """ Returns whole deck """
 
         cards = [
-            {'name': 'Ace', 'value': [1, 10]},
+            {'name': 'Ace', 'value': [1, 11]},
             {'name': 'Two', 'value': [2]},
             {'name': 'Three', 'value': [3]},
             {'name': 'Four', 'value': [4]},

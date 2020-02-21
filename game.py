@@ -4,19 +4,31 @@
 
 from blackjack.game import Game
 from blackjack.cli import get_answer
+from blackjack.player import Player, Dealer
 
 def main_game():
-    replay = True
-    while replay:
+    players = [Player('Bob', 500)]
+    dealer = Dealer('Dealer', 5000)
+    game = Game(players, dealer)
+    while True:
         print('\nWelcome!\n')
-        game = Game()
         game.start_game()
 
         print('\nGame finished')
-        print('\nReplay?')
-        replay = get_answer() == 'y'
 
-    print('\nBye')
+        for player in players:
+            if player.budget < 2:
+                print(f'Out of budget, {player.name}. Bye!')
+                players.remove(player)
+
+        if not players:
+            break
+
+        print('\nReplay?')
+        if get_answer() == 'n':
+            break
+
+    print('\nFin')
 
 
 if __name__ == '__main__':
