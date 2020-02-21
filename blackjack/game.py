@@ -47,8 +47,6 @@ class Game:
         print_header('Winners')
         self.determine_winner()
 
-        # TODO actual code
-
     def prepare_deck(self, count):
         self.deck = Deck(count)
         self.deck.shuffle()
@@ -70,7 +68,7 @@ class Game:
     def each_player_makes_move(self):
         for player in self.players:
             while player.determine_points() <= 21:
-                action = get_answer(['hit', 'stand'])
+                action = player.make_move()
                 if action == 'stand':
                     break
                 player.add_cards(self.deck.get(exposed=1))

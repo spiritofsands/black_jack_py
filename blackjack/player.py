@@ -1,4 +1,5 @@
 from typing import List
+from random import choice
 
 from blackjack.card import Card
 from blackjack.cli import get_answer
@@ -32,7 +33,9 @@ class Player:
         self._budget = new_budget
 
     def print_summary(self):
-        print(f'{self.name} (${self.budget}), bet: ${self.current_bet}:')
+        current_bet_str = (f', bet: ${self.current_bet}' if self.current_bet
+                           else '')
+        print(f'{self.name} (${self.budget}){current_bet_str}:')
         self.print_cards()
 
     def print_cards(self):
@@ -64,8 +67,12 @@ class Player:
         for card in self.cards:
             card.expose()
 
-class Dealer(Player):
-    current_bet: int = 100
+    def make_move(self):
+        return get_answer(['hit', 'stand'])
+
+
+class AiPlayer(Player):
+    current_bet: int = 0
 
     def _ask_points(self, card):
         points = sum(card.value for card in self.cards if card not in
@@ -78,6 +85,8 @@ class Dealer(Player):
             value = min(card.possible_values)
         card.value = value
 
-    def print_summary(self):
-        print(f'{self.name} (${self.budget}):')
-        self.print_cards()
+    def make_bet(self):
+        self.current_bet = (2 + self.budget) // 2
+
+    def make_move(self):
+        return choice(['hit', 'stand'])

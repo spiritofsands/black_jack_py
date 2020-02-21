@@ -4,11 +4,11 @@
 
 from blackjack.game import Game
 from blackjack.cli import get_answer
-from blackjack.player import Player, Dealer
+from blackjack.player import Player, AiPlayer
 
 def main_game():
-    players = [Player('Bob', 500)]
-    dealer = Dealer('Dealer', 5000)
+    players = [Player('Bob', 500), AiPlayer('Sam', 500)]
+    dealer = AiPlayer('Dealer', 5000)
     game = Game(players, dealer)
     while True:
         print('\nWelcome!\n')
