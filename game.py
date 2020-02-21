@@ -28,7 +28,7 @@ def main_game():
         if get_answer() == 'n':
             break
 
-    print('\nFin')
+    print('\nThanks for playing!')
 
 
 if __name__ == '__main__':
