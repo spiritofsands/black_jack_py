@@ -1,5 +1,4 @@
 from typing import List
-from random import choice
 
 from blackjack.card import Card
 from blackjack.cli import get_answer
@@ -69,8 +68,14 @@ class Dealer(Player):
     current_bet: int = 100
 
     def _ask_points(self, card):
-        # TODO: add logic
-        value = choice(card.possible_values)
+        points = sum(card.value for card in self.cards if card not in
+                     self.undetermined_cards)
+        max_possible_points = max(card.possible_values)
+        possible_points = points + max_possible_points
+        if 17 >= possible_points <= 21:
+            value = max_possible_points
+        else:
+            value = min(card.possible_values)
         card.value = value
 
     def print_summary(self):

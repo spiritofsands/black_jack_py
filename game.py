@@ -24,7 +24,7 @@ def main_game():
         if not players:
             break
 
-        print('\nReplay?')
+        print('\nContinue?')
         if get_answer() == 'n':
             break
 

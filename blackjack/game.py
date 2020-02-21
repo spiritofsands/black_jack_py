@@ -81,25 +81,24 @@ class Game:
             self.dealer.add_cards(self.deck.get(exposed=1))
             self.dealer.print_summary()
 
-    def _win(self, player):
-        amount = player.current_bet
+    def _win(self, player, multiplier=1):
+        amount = player.current_bet * multiplier
         player.budget += amount
         self.dealer.budget -= amount
-        print(f'\n{player.name} wins this time!\n')
+        print(f'\n{player.name} wins this time! (${amount})\n')
 
     def _lose(self, player):
         amount = player.current_bet
         player.budget -= amount
         self.dealer.budget += amount
-        print(f'\n{player.name} loses this time.\n')
+        print(f'\n{player.name} loses this time. (${amount})\n')
 
     def determine_winner(self):
         dealer_points = self.dealer.determine_points()
         for player in self.players:
             player_points = player.determine_points()
             if player_points == 21 and dealer_points != 21:
-                self._win(player)
-                self._win(player)
+                self._win(player, 2)
             elif dealer_points > 21 and player_points <= 21:
                 self._win(player)
             elif player_points > 21:
@@ -109,4 +108,4 @@ class Game:
             elif player_points < dealer_points:
                 self._lose(player)
             else:
-                print('Push! No loses for {player.name}')
+                print(f'Push! No loses for {player.name}')
