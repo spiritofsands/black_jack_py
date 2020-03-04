@@ -1,8 +1,11 @@
+from typing import List
+
+
 class Card:
     _value = None
     possible_values = None
 
-    def __init__(self, name, values, suit, exposed=False):
+    def __init__(self, name, values: List[int], suit, exposed=False):
         self._name = name
         if len(values) == 1:
             self._value = values[0]
@@ -21,6 +24,13 @@ class Card:
         return (f'{self.name} of {self.suit} [{value}]' if self.exposed
                 else '***')
 
+    def __eq__(self, rhs):
+        return (isinstance(rhs, Card) and
+                self.exposed == rhs.exposed and
+                self.name == rhs.name and
+                self.value == rhs.value and
+                self.suit == rhs.suit)
+
     @property
     def name(self):
         return self._name if self.exposed else '*'
@@ -31,8 +41,10 @@ class Card:
 
     @value.setter
     def value(self, value):
-        if value not in self.possible_values:
-            raise Exception('Wrong value')
+        if self.possible_values:
+            if value not in self.possible_values:
+                raise RuntimeError(f'Wrong value: {value} of '
+                                   f'{self.possible_values}')
         self._value = value
 
     @property

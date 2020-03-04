@@ -10,24 +10,9 @@ def main_game():
     players = [Player('Bob', 500), AiPlayer('Sam', 500)]
     dealer = AiPlayer('Dealer', 5000)
     game = Game(players, dealer)
-    while True:
-        print('\nWelcome!\n')
-        game.start_game()
 
-        print('\nGame finished')
-
-        for player in players:
-            if player.budget < 2:
-                print(f'Out of budget, {player.name}. Bye!')
-                players.remove(player)
-
-        if not players:
-            break
-
-        print('\nContinue?')
-        if get_answer() == 'n':
-            break
-
+    print('\nWelcome!\n')
+    game.game_loop()
     print('\nThanks for playing!')
 
 

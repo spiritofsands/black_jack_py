@@ -16,12 +16,6 @@ class Player:
         self.cards = []
         self._budget = budget
 
-    def add_card(self, card):
-        self.cards.append(card)
-
-    def add_cards(self, cards):
-        self.cards += cards
-
     @property
     def budget(self):
         return self._budget
@@ -29,7 +23,7 @@ class Player:
     @budget.setter
     def budget(self, new_budget):
         if new_budget < 0:
-            Exception('Can not go below zero budget')
+            raise RuntimeError('Can not go below zero budget')
         self._budget = new_budget
 
     def print_summary(self):

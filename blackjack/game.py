@@ -16,7 +16,25 @@ class Game:
             player.cards = []
         self.dealer.cards = []
 
-    def start_game(self):
+    def game_loop(self):
+        while True:
+            self.single_game()
+
+            print('\nGame finished')
+
+            for player in self.players:
+                if player.budget < 2:
+                    print(f'Out of budget, {player.name}. Bye!')
+                    self.players.remove(player)
+
+            if not self.players:
+                break
+
+            print('\nContinue?')
+            if get_answer() == 'n':
+                break
+
+    def single_game(self):
         print_header('Make your bets')
         self.make_bets()
 
@@ -57,8 +75,8 @@ class Game:
 
     def deal_start_cards(self):
         for player in self.players:
-            player.add_cards(self.deck.get(exposed=2))
-        self.dealer.add_cards(self.deck.get(exposed=1, hidden=1))
+            player.cards.extend(self.deck.get(exposed=2))
+        self.dealer.cards.extend(self.deck.get(exposed=1, hidden=1))
 
     def print_participants_cards(self):
         for number, player in enumerate(self.players + [self.dealer]):
@@ -71,12 +89,12 @@ class Game:
                 action = player.make_move()
                 if action == 'stand':
                     break
-                player.add_cards(self.deck.get(exposed=1))
+                player.cards.extend(self.deck.get(exposed=1))
                 player.print_summary()
 
     def dealer_makes_move(self):
         while self.dealer.determine_points() < 17:
-            self.dealer.add_cards(self.deck.get(exposed=1))
+            self.dealer.cards.extend(self.deck.get(exposed=1))
             self.dealer.print_summary()
 
     def _win(self, player, multiplier=1):
