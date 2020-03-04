@@ -93,7 +93,10 @@ class Game:
                 player.print_summary()
 
     def dealer_makes_move(self):
-        while self.dealer.determine_points() < 17:
+        while True:
+            action = self.dealer.make_move()
+            if action == 'stand':
+                break
             self.dealer.cards.extend(self.deck.get(exposed=1))
             self.dealer.print_summary()
 

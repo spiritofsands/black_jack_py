@@ -1,5 +1,4 @@
 from typing import List
-from random import choice
 
 from blackjack.card import Card
 from blackjack.cli import get_answer
@@ -83,4 +82,4 @@ class AiPlayer(Player):
         self.current_bet = (2 + self.budget) // 2
 
     def make_move(self):
-        return choice(['hit', 'stand'])
+        return 'hit' if self.determine_points() < 17 else 'stand'

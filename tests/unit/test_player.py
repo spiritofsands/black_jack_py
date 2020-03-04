@@ -131,18 +131,19 @@ class TestAiPlayer(TestCase):
 
         self.assertEqual(ai_player.current_bet, budget)
 
-    @patch('blackjack.player.choice', autospec=True)
-    def test_make_move(self, choice_mock):
+    def test_make_move(self):
         hit = 'hit'
         stand = 'stand'
-        choices = [0, 1]
-
-        def choice_select(value_list):
-            return value_list[choices.pop(0)]
-        choice_mock.side_effect = choice_select
+        moves = []
 
         ai_player = AiPlayer(_, _)
 
-        moves = [ai_player.make_move() for _ in range(2)]
+        value = 5
+        ai_player.cards = [Card(_, [value], _, exposed=True)]
+        moves.append(ai_player.make_move())
+
+        value = 18
+        ai_player.cards = [Card(_, [value], _, exposed=True)]
+        moves.append(ai_player.make_move())
 
         self.assertEqual(moves, [hit, stand])
